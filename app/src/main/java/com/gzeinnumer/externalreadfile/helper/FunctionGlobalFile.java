@@ -13,7 +13,7 @@ public class FunctionGlobalFile {
     private static final String TAG = "FunctionGLobalFile_";
 
     //create file
-    public static void initFile(String text) {
+    public static boolean initFile(String text) {
         File file;
         file = new File(FunctionGlobalDir.getStorageCard + FunctionGlobalDir.appFolder +"/File.txt");
         try{
@@ -25,14 +25,20 @@ public class FunctionGlobalFile {
             writer.flush();
             writer.close();
             f.close();
+            return true;
         }catch (IOException e){
             e.printStackTrace();
+            return false;
         }
     }
 
     public static List<String> readFile(String path){
         if (!FunctionGlobalDir.isFileExists(path)){
-            FunctionGlobalFile.initFile("Buat file");
+            if (!FunctionGlobalFile.initFile("Buat file")){
+                FunctionGlobalDir.myLogD(TAG, "File success dibuat");
+            } else {
+                return null;
+            }
         }
 
         File file = new File(FunctionGlobalDir.getStorageCard+ FunctionGlobalDir.appFolder+ "/File.txt");
