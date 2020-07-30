@@ -3,6 +3,7 @@ package com.gzeinnumer.externalreadfile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.gzeinnumer.externalreadfile.helper.FunctionGlobalDir;
@@ -25,9 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
         tv = findViewById(R.id.tv);
 
-        FunctionGlobalFile.initFile("Text yang dibuat di file");
-        List<String> list = FunctionGlobalFile.readFile(FunctionGlobalDir.appFolder+"/File.txt");
-        msg+="Jumlah line di file ada "+ list.size();
-        tv.setText(msg);
+        if (FunctionGlobalDir.isFileExists(FunctionGlobalDir.appFolder+"/File.txt")){
+            msg+="File sudah dibuat sebelumnya ";
+            tv.setText(msg);
+        } else {
+            FunctionGlobalFile.initFile("Text yang dibuat di file");
+            List<String> list = FunctionGlobalFile.readFile(FunctionGlobalDir.appFolder+"/File.txt");
+            msg+="Jumlah line di file ada "+ list.size();
+            tv.setText(msg);
+        }
     }
 }
